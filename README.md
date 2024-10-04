@@ -1,7 +1,7 @@
 # HSA cdn
 Handmade CDN
 
-Define domain for local network with
+Define DNS server for local network
 
 * [BIND DNS server](https://github.com/sameersbn/docker-bind)
 * [BIND docker setup](https://www.damagehead.com/blog/2015/04/28/deploying-a-dns-server-using-docker/)
@@ -10,7 +10,7 @@ Define domain for local network with
 
 Check custom dns record setup:
 ```
-host mydomain.local 127.0.0.1
+host cdn.example.com 127.0.0.1
 ```
 
 Configure local DNS server for MacOS:
