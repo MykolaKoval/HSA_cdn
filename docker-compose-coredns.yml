@@ -1,0 +1,51 @@
+version: '3.9'
+services:
+
+  coredns:
+    image: coredns/coredns:latest
+    ports:
+      - 53:53
+      - 53:53/udp
+    command: -conf /etc/coredns/Corefile
+    volumes:
+      - ./coredns:/etc/coredns
+      - ./geoip/GeoLite2-City.mmdb:/opt/geoip2/db/GeoLite2-City.mmdb
+    networks:
+      cdn_network:
+        ipv4_address: 172.18.0.12
+
+  edge-balancer:
+    image: nginx:latest
+    ports:
+      - 8080:80
+    volumes:
+      - ./nginx/edge.conf:/etc/nginx/conf.d/default.conf
+    dns:
+      - 172.18.0.12 # Custom DNS
+    networks:
+      - cdn_network
+
+  us-image-server:
+    image: nginx:latest
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./images/us/:/data/images
+    networks:
+      cdn_network:
+        ipv4_address: 172.18.0.13
+
+  global-image-server:
+    image: nginx:latest
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./images/global/:/data/images
+    networks:
+      cdn_network:
+        ipv4_address: 172.18.0.14
+
+networks:
+  cdn_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16  # Specify the subnet for the network

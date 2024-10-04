@@ -1,0 +1,12 @@
+example.com {
+    geoip /opt/geoip2/db/GeoLite2-City.mmdb
+    hosts {
+       172.18.0.14 cdn.example.com
+    }
+    log . " {remote}:{port} - {>id} {type} {class} {name} country_code {/geoip/country/code}"
+    errors
+}
+
+. {
+    forward . 1.1.1.1 1.0.0.1
+}
