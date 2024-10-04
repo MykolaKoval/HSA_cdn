@@ -6,6 +6,7 @@ Define domain for local network with
 * [BIND DNS server](https://github.com/sameersbn/docker-bind)
 * [BIND docker setup](https://www.damagehead.com/blog/2015/04/28/deploying-a-dns-server-using-docker/)
 * [Dnsmasq](https://github.com/strm-containers/docker-dnsmasq)
+* [Coredns](https://coredns.io/)
 
 Check custom dns record setup:
 ```
@@ -20,7 +21,7 @@ networksetup -getdnsservers Wi-Fi
 ```
 <h3>CDN</h3>
 
-CDN configured for static domain mappings only. Unfortunately, client IP is not passed to DNS server after edge proxy (tried for several DNS servers: Bind, Coredns).
+CDN configured for static domain mapping only. Unfortunately, didn't succeed with GeoDNS (client IP required for geolocation mapping is not passed to DNS server after edge proxy, tried with several DNS servers: Bind, Coredns).
 
 <h3>Load Balancing</h3>
 
